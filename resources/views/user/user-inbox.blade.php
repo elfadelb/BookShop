@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+@extends('user.layout.layout')
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -11,7 +11,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{url('admin/dashboard')}}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{url('user/dashboard')}}">Home</a></li>
                             <li class="breadcrumb-item active">Messages</li>
                         </ol>
                     </div><!-- /.col -->
@@ -37,10 +37,10 @@
                                         <tbody>
                                         @foreach(collect($msg)->unique('from') as $message)
 
-                                            @if (($message->to === $data->id || $data->permission === 1) && $message->from !== $data->id)
+                                            @if ($message->to === $data->id && $message->from !== $data->id)
                                                 <tr>
                                                     <td class="mailbox-subject"><img src="{{$users[$message->from-1]->image}}" class="img-circle elevation-2" alt="User Image" style="width: 3rem; height: 3rem"></td>
-                                                    <td class="mailbox-name"><a href="{{url('admin/chat-box/'.$users[$message->from-1]->id)}}">{{$users[$message->from-1]->first_name.' '.$users[$message->from-1]->last_name}}</a></td>
+                                                    <td class="mailbox-name"><a href="{{url('user/chat-box/'.$users[$message->from-1]->id)}}">{{$users[$message->from-1]->first_name.' '.$users[$message->from-1]->last_name}}</a></td>
                                                     @if($users[$message->from-1]->permission === 1)
                                                         <td class="text-success">Admin</td>
                                                     @else

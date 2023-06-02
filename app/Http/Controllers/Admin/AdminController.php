@@ -43,6 +43,7 @@ class AdminController extends Controller
             'username'=>'required',
             'password'=>'required|min:5|max:20',
             'birthdate'=>'required',
+            'permission'=>'required',
             'image'=>'required',
 
         ]);
@@ -52,6 +53,7 @@ class AdminController extends Controller
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->birth_date = $request->birthdate;
+        $user->permission = $request->permission;
         $user->image = $request->image;
         $res = $user->save();
         if($res){
@@ -124,6 +126,34 @@ class AdminController extends Controller
             return back()->with('fail','something wrong happen.Try later');
         }
 
+    }
+    public function settings(){
+        if(Session::has('AdminloginId')){
+            $data = User::where('id','=',Session::get('AdminloginId'))->first();
+            return view('admin.updatepw',compact('data'));
+        }
+        return view('login');
+    }
+    public function update_pw(Request $request){
+        $request->validate([
+            'oldpassword'=>'required',
+            'password'=>'sometimes|confirmed',
+
+        ]);
+        $user = User::where('id', '=', Session::get('AdminloginId'))->first();
+
+        if(Hash::check($request->password,$user->password)){
+            dd($user->password);
+            $res = User::where('id','=',$user->id)->update([
+                'password'=>Hash::make($request->password)
+            ]);
+            if($res){
+                return back()->with('success','Password updated successfully');
+            }
+        }
+        else{
+            return back()->with('fail','something wrong happen.Try later');
+        }
     }
 
 }

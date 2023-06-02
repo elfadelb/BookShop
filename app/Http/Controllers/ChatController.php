@@ -14,35 +14,31 @@ class ChatController extends Controller
     {
         if(Session::has('AdminloginId')){
             $data = User::where('id','=',Session::get('AdminloginId'))->first();
-            $users=User::all();
-            $msg=Chat::all();
+            $users = User::all();
+            $msg = Chat::where(function ($query) use ($data) {
+                $query->where('to', '!=', $data->id)
+                    ->orWhere('from', '!=', $data->id);
+            })->get();
+
             return view('admin.admin-inbox',compact('data','users','msg'));
         }
         return view('login');
     }
     public function show_chat_user()
     {
-        if(Session::has('UserloginId')) {
-            $data = User::where('id', '=', Session::get('UserloginId'))->first();
-            $user = User::find(Session::get('AdminloginId'));
+        if(Session::has('UserloginId')){
+            $data = User::where('id','=',Session::get('UserloginId'))->first();
+            $users = User::all();
+            $msg = Chat::where(function ($query) use ($data) {
+                $query->where('to', '!=', $data->id)
+                    ->orWhere('from', '!=', $data->id);
+            })->get();
 
-            $messagesFromUser = Chat::where('from', $user->id)
-                ->where('to', $data->id)
-                ->orderBy('created_at', 'asc')
-                ->get();
-
-            $messagesToUser = Chat::where('from', $data->id)
-                ->where('to', $user->id)
-                ->orderBy('created_at', 'asc')
-                ->get();
-
-            $allMessages = $messagesFromUser->concat($messagesToUser)->sortBy('created_at');
-
-            return view('user.user-chat', compact('data', 'user', 'allMessages'));
+            return view('user.user-inbox',compact('data','users','msg'));
         }
         return view('login');
     }
-    public function chat_box($id){
+    public function chat_box_admin($id){
         if(Session::has('AdminloginId')) {
             $data = User::where('id', '=', Session::get('AdminloginId'))->first();
             $user = User::find($id);
@@ -60,6 +56,27 @@ class ChatController extends Controller
             $allMessages = $messagesFromUser->concat($messagesToUser)->sortBy('created_at');
 
             return view('admin.admin-chat', compact('data', 'user', 'allMessages'));
+        }
+        return view('login');
+    }
+    public function chat_box_user($id){
+        if(Session::has('UserloginId')) {
+            $data = User::where('id', '=', Session::get('UserloginId'))->first();
+            $user = User::find($id);
+
+            $messagesFromUser = Chat::where('from', $user->id)
+                ->where('to', $data->id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            $messagesToUser = Chat::where('from', $data->id)
+                ->where('to', $user->id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+
+            $allMessages = $messagesFromUser->concat($messagesToUser)->sortBy('created_at');
+
+            return view('user.user-chat', compact('data', 'user', 'allMessages'));
         }
         return view('login');
     }

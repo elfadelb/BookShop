@@ -41,7 +41,7 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <div class="table-responsive">
-                                    <table class="table m-0">
+                                    <table class="table m-0" style="text-align: center">
                                         <thead>
                                         <tr>
                                             <th>User ID</th>
@@ -49,6 +49,7 @@
                                             <th>first Name</th>
                                             <th>Last Name</th>
                                             <th>Username</th>
+                                            <th>Type</th>
                                             <th>Birth Date</th>
                                         </tr>
                                         </thead>
@@ -60,7 +61,12 @@
                                             <td>{{$user->first_name}}</td>
                                             <td>{{$user->last_name}}</td>
                                             <td>{{$user->username}}</td>
-                                            <td>{{$user->birth_date}}</td>
+                                            @if($user->permission === 1)
+                                                <td class="text-success">Admin</td>
+                                            @else
+                                                <td class="text-primary">User</td>
+                                            @endif
+                                            <td>{{\Carbon\Carbon::parse($user->birth_date)->format('d M Y')}}</td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -108,7 +114,7 @@
                                             <td style="text-align: center"><img src="{{$book->cover_image}}" alt="User Image" style="width: 2.8rem; border-radius: 10%;"></td>
                                             <td>{{$book->title}}</td>
                                             <td>{{$book->author}}</td>
-                                            <td>{{$book->publication_date}}</td>
+                                            <td>{{\Carbon\Carbon::parse($book->publication_date)->format('d M Y')}}</td>
                                             <td>{{'$ '.$book->price}}</td>
                                         </tr>
                                         @endforeach

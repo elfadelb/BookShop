@@ -68,12 +68,13 @@
                     <span class="text-danger">@error('birthdate'){{$message}}@enderror</span>
                 </div>
                     <div class="form-group">
+                        <label>Permission</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="isAdmin">
+                            <input class="form-check-input" type="radio" name="permission" value="1">
                             <label class="form-check-label">Admin</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="isAdmin">
+                            <input class="form-check-input" type="radio" name="permission" value="0">
                             <label class="form-check-label">User</label>
                         </div>
                     </div>

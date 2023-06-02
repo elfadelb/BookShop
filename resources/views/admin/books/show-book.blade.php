@@ -45,7 +45,7 @@
                             <!-- /.card-header -->
                             <div class="card-body p-0">
                                 <div class="table-responsive">
-                                    <table class="table m-0">
+                                    <table class="table m-0" style="text-align: center">
                                         <thead>
                                         <tr>
                                             <th>Book ID</th>
@@ -54,6 +54,7 @@
                                             <th>Author</th>
                                             <th>Publication Date</th>
                                             <th>Price</th>
+                                            <th colspan="2">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -63,7 +64,7 @@
                                                 <td style="text-align: center"><img src="{{$book->cover_image}}" alt="User Image" style="width: 2.8rem; border-radius: 10%;"></td>
                                                 <td>{{$book->title}}</td>
                                                 <td>{{$book->author}}</td>
-                                                <td>{{$book->publication_date}}</td>
+                                                <td>{{\Carbon\Carbon::parse($book->publication_date)->format('d M Y')}}</td>
                                                 <td>{{$book->price}}</td>
                                                 <td><a href="{{url('admin/edit-book/'.$book->id)}}" class="btn btn-success">Edit</a></td>
                                                 <td><a href="{{url('admin/delete-book/'.$book->id)}}" class="btn btn-danger">Delete</a></td>

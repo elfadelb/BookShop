@@ -75,6 +75,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/edit-user/{id}',[AdminController::class,'edit_user']);
         Route::post('/update-user',[AdminController::class,'update_user']);
         Route::get('/delete-user/{id}',[AdminController::class,'delete_user']);
+        Route::get('/settings',[AdminController::class,'settings']);
+        Route::post('/update-password',[AdminController::class,'update_pw']);
 
         Route::get('/new-book',[BooksController::class,'register_book_page']);
         Route::post('/register-book',[BooksController::class,'register_book']);
@@ -84,7 +86,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/delete-book/{id}',[BooksController::class,'delete_book']);
 
         Route::get('/chat',[ChatController::class,'show_chat_admin']);
-        Route::get('/chat-box/{id}',[ChatController::class,'chat_box']);
+        Route::get('/chat-box/{id}',[ChatController::class,'chat_box_admin']);
         Route::post('/send-msg/{id}',[ChatController::class,'admin_send_msg']);
     });
     Route::view('login', 'login');
@@ -96,6 +98,7 @@ Route::prefix('user')->group(function () {
         Route::get('dashboard', [UserController::class, 'dashboard']);
         Route::get('book-desc/{id}', [UserController::class, 'book_desc']);
         Route::get('/chat',[ChatController::class,'show_chat_user']);
+        Route::get('/chat-box/{id}',[ChatController::class,'chat_box_user']);
         Route::post('/send-msg/{id}',[ChatController::class,'user_send_msg']);
     });
 });

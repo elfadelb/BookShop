@@ -49,7 +49,7 @@
                 </a>
                 </li>
                 <li class="nav-item ">
-                <a href="#" class="nav-link">
+                <a href="{{url('admin/settings')}}" class="nav-link">
                     <i class="nav-icon far fa-light fa-gear"></i>
                     <p>
                         Settings
