@@ -1,4 +1,5 @@
 @extends('admin.layout.layout')
+
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -27,20 +28,22 @@
                     @foreach($books as $book)
                         <div class="col-sm-6 col-md-4 col-lg-4 gap-3 d-flex align-items-center justify-content-center">
                             <div class="card h-70 rounded-top" style="width: 300px;">
-                                <img src="{{$book->cover_image}}" class="card-img-top rounded-top h-100" alt="..." style="width: 300px;max-height: 250px;" >
-                                <div class="card-body " style="width: 300px;max-height: 250px;">
+                                <img src="{{$book->cover_image}}" class="card-img-top rounded-top h-100" alt="..." style="width: 300px;max-height: 250px;">
+                                <div class="card-body" style="width: 300px;max-height: 250px;">
                                     <h5 class="card-title"><b>{{$book->title}}</b></h5>
                                     <p class="card-text">{{Str::words($book->description, 10) }}</p>
-                                    <a href="{{url('user/book-desc/'.$book->id)}}" class="btn btn-primary "  >More Details</a>
+                                    <a href="{{url('admin/book-desc/'.$book->id)}}" class="btn btn-primary">More Details</a>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
                 <!-- /.row -->
-            </div><!--/. container-fluid -->
-        </section>
 
+
+            </div><!--/. container-fluid -->
+
+        </section>
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->

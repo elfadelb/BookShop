@@ -142,8 +142,7 @@ class AdminController extends Controller
         ]);
         $user = User::where('id', '=', Session::get('AdminloginId'))->first();
 
-        if(Hash::check($request->password,$user->password)){
-            dd($user->password);
+        if(Hash::check($request->oldpassword,$user->password)){
             $res = User::where('id','=',$user->id)->update([
                 'password'=>Hash::make($request->password)
             ]);
@@ -154,6 +153,30 @@ class AdminController extends Controller
         else{
             return back()->with('fail','something wrong happen.Try later');
         }
+    }
+    public function search(){
+        if(Session::has('AdminloginId')){
+        if (request()->input('search')) {
+            $books = Book::where('title', 'LIKE', '%' . request()->input('search') . '%')
+                ->orwhere('description', 'LIKE', '%' . request()->input('search') . '%')->get();
+        } else {
+            $books = Book::all();
+        }
+        $data = User::where('id','=',Session::get('AdminloginId'))->first();
+        return view('admin.announcement', [
+            'books' => $books,
+            'data' => $data
+        ]);
+        }
+        return view('login');
+    }
+    public function book_desc($id){
+        if(Session::has('AdminloginId')){
+            $data = User::where('id','=',Session::get('AdminloginId'))->first();
+            $book = Book::where('id','=',$id)->first();
+            return view('admin.books.show-book-desc',compact('data','book'));
+        }
+        return view('login');
     }
 
 }

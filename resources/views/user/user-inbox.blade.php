@@ -24,7 +24,35 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-4">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">Admins</h3>
+                            </div>
+
+                            <div class="card-body p-0">
+
+                                <div class="table-responsive mailbox-messages">
+                                    <table class="table table-hover table-striped">
+                                        <tbody>
+                                        @foreach($users as $user)
+                                            @if($user->permission===1 && $user->id !== $data->id)
+                                            <tr>
+                                                <td class="mailbox-subject"><img src="{{$user->image}}" class="img-circle elevation-2" alt="User Image" style="width: 3rem; height: 3rem"></td>
+                                                <td class="mailbox-name"><a class="text-muted" href="{{url('user/chat-box/'.$user->id)}}">{{$user->first_name.' '.$user->last_name}}</a></td>
+                                            </tr>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card-footer p-0"></div>
+                        </div>
+
+                    </div>
+                    <div class="col-8">
                         <div class="card card-primary card-outline">
                             <div class="card-header">
                                 <h3 class="card-title">Inbox</h3>
